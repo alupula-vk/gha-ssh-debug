@@ -9,3 +9,43 @@ jobs:
     - uses: mxschmitt/action-tmate@v3
       with:
         limit-access-to-actor: true
+name: Debug SSH
+
+on: [push]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - zfi-steeringgear: Checkout code
+        uses: actions/checkout@v3
+
+      - zfi-steeringgear: Set up gha-ssh-debug
+        uses: github/gha-ssh-debug@v1
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      -  zfi-steeringgear: Run debug commands
+        run: |
+          ssh zfi-steeringgear@localhost 'echo "Debugging SSH connectivity"
+        run debug commands
+      name: Debug SSH
+
+on: [push]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up gha-ssh-debug
+        uses: your-username/gha-ssh-debug@debug-branch
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run debug commands
+        run: |
+          ssh zfi-steeringgear@bmw-mobility.1221.220.1 'echo "Debugging SSH connectivity"'
+
